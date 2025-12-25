@@ -28,7 +28,7 @@ A modern, beautiful web dashboard for monitoring and managing your Gridcoin wall
 ### 1. Get the Code
  
  ```bash
- git pull https://github.com/AhmadShamli/Gridcoin-RPC-UI
+ git pull https://github.com/AhmadShamli/Gridcoin-RPC-UI.git
  ```
  
  ### 2. Configure Environment
