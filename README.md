@@ -25,7 +25,13 @@ A modern, beautiful web dashboard for monitoring and managing your Gridcoin wall
 
 ## Quick Start
 
-### 1. Configure Environment
+### 1. Get the Code
+ 
+ ```bash
+ git pull https://github.com/AhmadShamli/Gridcoin-RPC-UI
+ ```
+ 
+ ### 2. Configure Environment
 
 Copy the example environment file and edit it:
 
@@ -45,7 +51,7 @@ APP_USERNAME=admin
 APP_PASSWORD=your-secure-password
 ```
 
-### 2. Deploy with Docker Compose
+### 3. Deploy with Docker Compose
 
 ```bash
 docker compose up -d
