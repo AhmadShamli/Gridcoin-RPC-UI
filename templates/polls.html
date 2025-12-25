@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Polls - Gridcoin RPC{% endblock %}
+{% block page_title %}Polls{% endblock %}
+
+{% block content %}
+<div class="polls-container">
+    <div class="card glass-card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">
+                <i class="bi bi-ui-checks me-2"></i>Active Polls
+            </h5>
+            <button class="btn btn-sm btn-outline-primary" id="refreshPolls">
+                <i class="bi bi-arrow-clockwise"></i>
+            </button>
+        </div>
+        <div class="card-body" id="pollsContainer">
+            <div class="text-center py-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Poll Details Modal -->
+<div class="modal fade" id="pollModal" tabindex="-1" aria-labelledby="pollModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pollModalLabel">Poll Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="pollModalBody">
+                <!-- Poll details will be loaded here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/polls.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}Research - Gridcoin RPC{% endblock %}
+{% block page_title %}Research{% endblock %}
+
+{% block content %}
+<div class="research-container">
+    <!-- Research Stats -->
+    <div class="row g-4 mb-4">
+        <div class="col-lg-4 col-md-6">
+            <div class="stat-card gradient-success">
+                <div class="stat-icon">
+                    <i class="bi bi-mortarboard"></i>
+                </div>
+                <div class="stat-content">
+                    <span class="stat-label">CPID</span>
+                    <h3 class="stat-value text-truncate" id="cpid" style="font-size: 0.9rem;">-</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="stat-card gradient-primary">
+                <div class="stat-icon">
+                    <i class="bi bi-broadcast"></i>
+                </div>
+                <div class="stat-content">
+                    <span class="stat-label">Beacon Status</span>
+                    <h3 class="stat-value" id="beaconActive">-</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="stat-card gradient-warning">
+                <div class="stat-icon">
+                    <i class="bi bi-star"></i>
+                </div>
+                <div class="stat-content">
+                    <span class="stat-label">Research Magnitude</span>
+                    <h3 class="stat-value" id="magnitude">-</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mining Info -->
+    <div class="row g-4 mb-4">
+        <div class="col-lg-6">
+            <div class="card glass-card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-cpu me-2"></i>Mining Information
+                    </h5>
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse"
+                        data-bs-target="#miningRaw">
+                        <i class="bi bi-code-slash"></i>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="info-grid" id="miningInfoGrid">
+                        <div class="info-item">
+                            <span class="info-label">Current Block</span>
+                            <span class="info-value" id="miningBlocks">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Difficulty</span>
+                            <span class="info-value" id="miningDifficulty">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">BOINC Reward Pending</span>
+                            <span class="info-value" id="boincReward">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Errors</span>
+                            <span class="info-value text-truncate" id="miningErrors">-</span>
+                        </div>
+                    </div>
+                    <div class="collapse mt-3" id="miningRaw">
+                        <pre class="raw-data" id="miningRawData">Loading...</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card glass-card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-broadcast me-2"></i>Beacon Status
+                    </h5>
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse"
+                        data-bs-target="#beaconRaw">
+                        <i class="bi bi-code-slash"></i>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="info-grid" id="beaconInfoGrid">
+                        <div class="info-item">
+                            <span class="info-label">Active</span>
+                            <span class="info-value" id="beaconStatusActive">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Timestamp</span>
+                            <span class="info-value" id="beaconTimestamp">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Address</span>
+                            <span class="info-value text-truncate" id="beaconAddress">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Verification Code</span>
+                            <span class="info-value text-truncate" id="beaconCode">-</span>
+                        </div>
+                    </div>
+                    <div class="collapse mt-3" id="beaconRaw">
+                        <pre class="raw-data" id="beaconRawData">Loading...</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/research.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Gridcoin RPC{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Quick Stats Row -->
+    <div class="row g-4 mb-4">
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card gradient-primary">
+                <div class="stat-icon">
+                    <i class="bi bi-wallet2"></i>
+                </div>
+                <div class="stat-content">
+                    <span class="stat-label">Balance</span>
+                    <h3 class="stat-value" id="statBalance">
+                        <span class="placeholder-glow"><span class="placeholder col-8"></span></span>
+                    </h3>
+                    <span class="stat-sub" id="statUnconfirmed">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card gradient-success">
+                <div class="stat-icon">
+                    <i class="bi bi-lightning-charge"></i>
+                </div>
+                <div class="stat-content">
+                    <span class="stat-label">Staking Status</span>
+                    <h3 class="stat-value" id="statStaking">
+                        <span class="placeholder-glow"><span class="placeholder col-6"></span></span>
+                    </h3>
+                    <span class="stat-sub" id="statStakingWeight">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card gradient-info">
+                <div class="stat-icon">
+                    <i class="bi bi-boxes"></i>
+                </div>
+                <div class="stat-content">
+                    <span class="stat-label">Block Height</span>
+                    <h3 class="stat-value" id="statBlocks">
+                        <span class="placeholder-glow"><span class="placeholder col-7"></span></span>
+                    </h3>
+                    <span class="stat-sub" id="statDifficulty">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card gradient-warning">
+                <div class="stat-icon">
+                    <i class="bi bi-people"></i>
+                </div>
+                <div class="stat-content">
+                    <span class="stat-label">Connections</span>
+                    <h3 class="stat-value" id="statConnections">
+                        <span class="placeholder-glow"><span class="placeholder col-4"></span></span>
+                    </h3>
+                    <span class="stat-sub" id="statVersion">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Row -->
+    <div class="row g-4">
+        <!-- Wallet Info -->
+        <div class="col-lg-6">
+            <div class="card glass-card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-wallet2 me-2"></i>Wallet Information
+                    </h5>
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse"
+                        data-bs-target="#walletRaw">
+                        <i class="bi bi-code-slash"></i>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="info-grid" id="walletInfoGrid">
+                        <div class="info-item">
+                            <span class="info-label">Wallet Version</span>
+                            <span class="info-value" id="walletVersion">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">TX Count</span>
+                            <span class="info-value" id="walletTxCount">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Keypool Size</span>
+                            <span class="info-value" id="walletKeypool">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Unlocked Until</span>
+                            <span class="info-value" id="walletUnlocked">-</span>
+                        </div>
+                    </div>
+                    <div class="collapse mt-3" id="walletRaw">
+                        <pre class="raw-data" id="walletRawData">Loading...</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Staking Info -->
+        <div class="col-lg-6">
+            <div class="card glass-card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-lightning-charge me-2"></i>Staking Information
+                    </h5>
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse"
+                        data-bs-target="#stakingRaw">
+                        <i class="bi bi-code-slash"></i>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="info-grid" id="stakingInfoGrid">
+                        <div class="info-item">
+                            <span class="info-label">Staking</span>
+                            <span class="info-value" id="stakingEnabled">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Weight</span>
+                            <span class="info-value" id="stakingWeight">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Net Stake Weight</span>
+                            <span class="info-value" id="netStakeWeight">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Expected Time</span>
+                            <span class="info-value" id="expectedTime">-</span>
+                        </div>
+                    </div>
+                    <div class="collapse mt-3" id="stakingRaw">
+                        <pre class="raw-data" id="stakingRawData">Loading...</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Network Info -->
+        <div class="col-lg-6">
+            <div class="card glass-card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-globe me-2"></i>Network Information
+                    </h5>
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse"
+                        data-bs-target="#networkRaw">
+                        <i class="bi bi-code-slash"></i>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="info-grid" id="networkInfoGrid">
+                        <div class="info-item">
+                            <span class="info-label">Protocol Version</span>
+                            <span class="info-value" id="protocolVersion">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Subversion</span>
+                            <span class="info-value" id="subversion">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Local Services</span>
+                            <span class="info-value" id="localServices">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Relay Fee</span>
+                            <span class="info-value" id="relayFee">-</span>
+                        </div>
+                    </div>
+                    <div class="collapse mt-3" id="networkRaw">
+                        <pre class="raw-data" id="networkRawData">Loading...</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Superblock Info -->
+        <div class="col-lg-6">
+            <div class="card glass-card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-clock-history me-2"></i>Superblock Status
+                    </h5>
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse"
+                        data-bs-target="#superblockRaw">
+                        <i class="bi bi-code-slash"></i>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="info-grid" id="superblockInfoGrid">
+                        <div class="info-item">
+                            <span class="info-label">Superblock Age</span>
+                            <span class="info-value" id="superblockAge">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Pending</span>
+                            <span class="info-value" id="superblockPending">-</span>
+                        </div>
+                    </div>
+                    <div class="collapse mt-3" id="superblockRaw">
+                        <pre class="raw-data" id="superblockRawData">Loading...</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

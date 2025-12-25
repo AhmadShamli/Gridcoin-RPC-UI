@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Transactions - Gridcoin RPC{% endblock %}
+{% block page_title %}Transactions{% endblock %}
+
+{% block content %}
+<div class="transactions-container">
+    <div class="card glass-card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">
+                <i class="bi bi-arrow-left-right me-2"></i>Recent Transactions
+            </h5>
+            <div class="d-flex gap-2">
+                <select class="form-select form-select-sm" id="txCount" style="width: auto;">
+                    <option value="10">Last 10</option>
+                    <option value="20" selected>Last 20</option>
+                    <option value="50">Last 50</option>
+                    <option value="100">Last 100</option>
+                </select>
+                <button class="btn btn-sm btn-outline-primary" id="refreshTx">
+                    <i class="bi bi-arrow-clockwise"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Address</th>
+                            <th>Category</th>
+                            <th>Confirmations</th>
+                            <th>Time</th>
+                            <th>TXID</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactionsTable">
+                        <tr>
+                            <td colspan="7" class="text-center py-5">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/transactions.js') }}"></script>
+{% endblock %}

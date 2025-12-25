@@ -1,0 +1,27 @@
+services:
+  gridcoin-rpc-ui:
+    build: .
+    container_name: gridcoin-rpc-ui
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      # Gridcoin RPC Configuration
+      # When Gridcoin is on host network, use host.docker.internal (Docker Desktop)
+      # or the actual host IP address on Linux
+      - GRIDCOIN_RPC_HOST=${GRIDCOIN_RPC_HOST:-host.docker.internal}
+      - GRIDCOIN_RPC_PORT=${GRIDCOIN_RPC_PORT:-15715}
+      - GRIDCOIN_RPC_USER=${GRIDCOIN_RPC_USER}
+      - GRIDCOIN_RPC_PASSWORD=${GRIDCOIN_RPC_PASSWORD}
+      # App Configuration
+      - SECRET_KEY=${SECRET_KEY:-change-this-secret-key}
+      - APP_USERNAME=${APP_USERNAME:-admin}
+      - APP_PASSWORD=${APP_PASSWORD:-changeme}
+    networks:
+      - ovhgra1
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+networks:
+  ovhgra1:
+    external: true

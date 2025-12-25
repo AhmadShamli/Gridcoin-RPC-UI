@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Network - Gridcoin RPC{% endblock %}
+{% block page_title %}Network{% endblock %}
+
+{% block content %}
+<div class="network-container">
+    <!-- Network Stats -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="stat-card gradient-info">
+                <div class="stat-icon">
+                    <i class="bi bi-people"></i>
+                </div>
+                <div class="stat-content">
+                    <span class="stat-label">Connected Peers</span>
+                    <h3 class="stat-value" id="peerCount">-</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card gradient-success">
+                <div class="stat-icon">
+                    <i class="bi bi-arrow-down"></i>
+                </div>
+                <div class="stat-content">
+                    <span class="stat-label">Bytes Received</span>
+                    <h3 class="stat-value" id="bytesRecv">-</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card gradient-primary">
+                <div class="stat-icon">
+                    <i class="bi bi-arrow-up"></i>
+                </div>
+                <div class="stat-content">
+                    <span class="stat-label">Bytes Sent</span>
+                    <h3 class="stat-value" id="bytesSent">-</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Peers Table -->
+    <div class="card glass-card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">
+                <i class="bi bi-diagram-3 me-2"></i>Connected Peers
+            </h5>
+            <button class="btn btn-sm btn-outline-primary" id="refreshPeers">
+                <i class="bi bi-arrow-clockwise"></i>
+            </button>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Address</th>
+                            <th>Version</th>
+                            <th>Subversion</th>
+                            <th>Ping</th>
+                            <th>Starting Height</th>
+                            <th>Ban Score</th>
+                            <th>Direction</th>
+                        </tr>
+                    </thead>
+                    <tbody id="peersTable">
+                        <tr>
+                            <td colspan="7" class="text-center py-5">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/network.js') }}"></script>
+{% endblock %}

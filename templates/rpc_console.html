@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}RPC Console - Gridcoin RPC{% endblock %}
+{% block page_title %}RPC Console{% endblock %}
+
+{% block content %}
+<div class="console-container">
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card glass-card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-terminal me-2"></i>Command Console
+                    </h5>
+                    <button class="btn btn-sm btn-outline-danger" id="clearConsole">
+                        <i class="bi bi-trash"></i> Clear
+                    </button>
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <div class="console-output" id="consoleOutput">
+                        <div class="console-welcome">
+                            <p class="mb-2">Welcome to the Gridcoin RPC Console!</p>
+                            <p class="text-muted mb-0">Enter commands below. Use 'help' to list available commands.</p>
+                        </div>
+                    </div>
+                    <div class="console-input-wrapper mt-3">
+                        <form id="rpcForm" class="d-flex gap-2">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-chevron-right"></i></span>
+                                <input type="text" class="form-control font-monospace" id="rpcCommand"
+                                    placeholder="Enter RPC command (e.g., getinfo)" autocomplete="off">
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-play-fill"></i> Execute
+                            </button>
+                        </form>
+                        <div class="mt-2">
+                            <small class="text-muted">
+                                <i class="bi bi-info-circle me-1"></i>
+                                Parameters can be space-separated or JSON format
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card glass-card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-bookmark me-2"></i>Quick Commands
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex flex-wrap gap-2">
+                        <button class="btn btn-outline-secondary btn-sm quick-cmd" data-cmd="getinfo">getinfo</button>
+                        <button class="btn btn-outline-secondary btn-sm quick-cmd"
+                            data-cmd="getwalletinfo">getwalletinfo</button>
+                        <button class="btn btn-outline-secondary btn-sm quick-cmd"
+                            data-cmd="getstakinginfo">getstakinginfo</button>
+                        <button class="btn btn-outline-secondary btn-sm quick-cmd"
+                            data-cmd="getmininginfo">getmininginfo</button>
+                        <button class="btn btn-outline-secondary btn-sm quick-cmd"
+                            data-cmd="getblockchaininfo">getblockchaininfo</button>
+                        <button class="btn btn-outline-secondary btn-sm quick-cmd"
+                            data-cmd="getnetworkinfo">getnetworkinfo</button>
+                        <button class="btn btn-outline-secondary btn-sm quick-cmd"
+                            data-cmd="getpeerinfo">getpeerinfo</button>
+                        <button class="btn btn-outline-secondary btn-sm quick-cmd"
+                            data-cmd="getbalance">getbalance</button>
+                        <button class="btn btn-outline-secondary btn-sm quick-cmd"
+                            data-cmd="listtransactions">listtransactions</button>
+                        <button class="btn btn-outline-secondary btn-sm quick-cmd"
+                            data-cmd="beaconstatus">beaconstatus</button>
+                        <button class="btn btn-outline-secondary btn-sm quick-cmd"
+                            data-cmd="listpolls">listpolls</button>
+                        <button class="btn btn-outline-secondary btn-sm quick-cmd"
+                            data-cmd="superblockage">superblockage</button>
+                        <button class="btn btn-outline-secondary btn-sm quick-cmd" data-cmd="help">help</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card glass-card mt-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-clock-history me-2"></i>Command History
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div id="commandHistory" class="command-history">
+                        <p class="text-muted mb-0">No commands yet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/console.js') }}"></script>
+{% endblock %}
