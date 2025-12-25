@@ -9,6 +9,7 @@ A modern, beautiful web dashboard for monitoring and managing your Gridcoin wall
 - 🎨 **Modern Dark Theme** - Glassmorphism design with smooth animations
 - 📊 **Dashboard** - Real-time overview of wallet, staking, and network status
 - 💰 **Transactions** - View recent transaction history with filtering
+- 💳 **Addresses** - View all wallet addresses, balances, and labels
 - 🌐 **Network** - Connected peers and network statistics
 - 🔬 **Research** - BOINC/CPID information and beacon status
 - 🗳️ **Polls** - View active governance polls
@@ -20,17 +21,11 @@ A modern, beautiful web dashboard for monitoring and managing your Gridcoin wall
 
 - Docker and Docker Compose
 - Gridcoin daemon running with RPC enabled
-- Network `ovhgra1` must exist for Docker deployment
+- Gridcoin daemon running with RPC enabled
 
 ## Quick Start
 
-### 1. Create the Docker Network (if not exists)
-
-```bash
-docker network create ovhgra1
-```
-
-### 2. Configure Environment
+### 1. Configure Environment
 
 Copy the example environment file and edit it:
 
@@ -50,7 +45,7 @@ APP_USERNAME=admin
 APP_PASSWORD=your-secure-password
 ```
 
-### 3. Deploy with Docker Compose
+### 2. Deploy with Docker Compose
 
 ```bash
 docker compose up -d
@@ -115,6 +110,7 @@ Gridcoin-RPC-UI/
 │   ├── login.html
 │   ├── dashboard.html
 │   ├── transactions.html
+│   ├── addresses.html
 │   ├── network.html
 │   ├── research.html
 │   ├── polls.html
@@ -126,6 +122,7 @@ Gridcoin-RPC-UI/
         ├── app.js
         ├── dashboard.js
         ├── transactions.js
+        ├── addresses.js
         ├── network.js
         ├── research.js
         ├── polls.js
