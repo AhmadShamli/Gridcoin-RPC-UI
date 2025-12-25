@@ -2,7 +2,7 @@
 
 A modern, beautiful web dashboard for monitoring and managing your Gridcoin wallet via RPC. Built with Python 3.13, Flask, and Bootstrap 5.
 
-![Dashboard Preview](docs/image.png)
+![Dashboard Preview](docs/image2.png)
 
 ## Features
 
