@@ -3,8 +3,12 @@ services:
     build: .
     container_name: gridcoin-rpc-ui
     restart: unless-stopped
-    ports:
-      - "5000:5000"
+    # Expose to host/public
+    #ports:
+    #  - "5000:5000"
+    # Only expose to Docker network, not to host/public
+    expose:
+      - "5000"
     environment:
       # Gridcoin RPC Configuration
       # When Gridcoin is on host network, use host.docker.internal (Docker Desktop)
