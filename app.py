@@ -104,6 +104,13 @@ def rpc_console():
     return render_template('rpc_console.html')
 
 
+@app.route('/addresses')
+@login_required
+def addresses():
+    """Address list view."""
+    return render_template('addresses.html')
+
+
 # ===== API Routes =====
 
 @app.route('/api/dashboard-data')
@@ -206,6 +213,20 @@ def api_polls():
 def api_superblock_age():
     """Get superblock age."""
     return jsonify(rpc_client.get_superblock_age())
+
+
+@app.route('/api/addresses')
+@login_required
+def api_addresses():
+    """Get address groupings."""
+    return jsonify(rpc_client.list_address_groupings())
+
+
+@app.route('/api/address/<address>/utxos')
+@login_required
+def api_address_utxos(address):
+    """Get UTXOs for a specific address."""
+    return jsonify(rpc_client.list_unspent(addresses=[address]))
 
 
 @app.route('/api/execute-rpc', methods=['POST'])

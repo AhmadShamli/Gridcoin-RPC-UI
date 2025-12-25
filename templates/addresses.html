@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Addresses - Gridcoin RPC{% endblock %}
+{% block page_title %}Addresses{% endblock %}
+
+{% block content %}
+<div class="addresses-container">
+    <div class="card glass-card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">
+                <i class="bi bi-wallet2 me-2"></i>Address Balances
+            </h5>
+            <div class="d-flex gap-2">
+                <div class="input-group input-group-sm" style="width: 250px;">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                    <input type="text" class="form-control" id="addressSearch" placeholder="Search address or label...">
+                </div>
+                <button class="btn btn-sm btn-outline-primary" id="refreshAddresses">
+                    <i class="bi bi-arrow-clockwise"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Address</th>
+                            <th>Label</th>
+                            <th class="text-end">Balance</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="addressesTable">
+                        <tr>
+                            <td colspan="4" class="text-center py-5">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Address Details Modal -->
+<div class="modal fade" id="addressDetailsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content glass-card">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title">Address Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label text-muted small">Address</label>
+                    <div class="d-flex align-items-center gap-2">
+                        <code class="fs-6" id="modalAddress"></code>
+                        <button class="btn btn-sm btn-link p-0 text-decoration-none"
+                            onclick="copyToClipboard(document.getElementById('modalAddress').innerText)">
+                            <i class="bi bi-clipboard"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label text-muted small">Label</label>
+                    <div class="fs-6" id="modalLabel">-</div>
+                </div>
+
+                <h6 class="mb-3">Unspent Outputs (UTXOs)</h6>
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>TXID</th>
+                                <th>Vout</th>
+                                <th>Amount</th>
+                                <th>Conf.</th>
+                            </tr>
+                        </thead>
+                        <tbody id="utxoTable">
+                            <!-- UTXOs will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/addresses.js') }}"></script>
+{% endblock %}

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Gridcoin RPC Dashboard - Monitor and manage your Gridcoin wallet">
     <title>{% block title %}Gridcoin RPC Dashboard{% endblock %}</title>
-    
+
     <!-- Bootstrap 5.3 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -13,11 +14,14 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     {% block extra_css %}{% endblock %}
 </head>
+
 <body>
     {% if current_user.is_authenticated %}
     <!-- Sidebar -->
@@ -30,28 +34,39 @@
                 <span class="logo-text">Gridcoin</span>
             </div>
         </div>
-        
+
         <ul class="nav flex-column sidebar-nav">
             <li class="nav-item">
-                <a class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}">
+                <a class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}"
+                    href="{{ url_for('dashboard') }}">
                     <i class="bi bi-speedometer2"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {% if request.endpoint == 'transactions' %}active{% endif %}" href="{{ url_for('transactions') }}">
+                <a class="nav-link {% if request.endpoint == 'addresses' %}active{% endif %}"
+                    href="{{ url_for('addresses') }}">
+                    <i class="bi bi-wallet2"></i>
+                    <span>Addresses</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if request.endpoint == 'transactions' %}active{% endif %}"
+                    href="{{ url_for('transactions') }}">
                     <i class="bi bi-arrow-left-right"></i>
                     <span>Transactions</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {% if request.endpoint == 'network' %}active{% endif %}" href="{{ url_for('network') }}">
+                <a class="nav-link {% if request.endpoint == 'network' %}active{% endif %}"
+                    href="{{ url_for('network') }}">
                     <i class="bi bi-diagram-3"></i>
                     <span>Network</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {% if request.endpoint == 'research' %}active{% endif %}" href="{{ url_for('research') }}">
+                <a class="nav-link {% if request.endpoint == 'research' %}active{% endif %}"
+                    href="{{ url_for('research') }}">
                     <i class="bi bi-mortarboard"></i>
                     <span>Research</span>
                 </a>
@@ -63,13 +78,14 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {% if request.endpoint == 'rpc_console' %}active{% endif %}" href="{{ url_for('rpc_console') }}">
+                <a class="nav-link {% if request.endpoint == 'rpc_console' %}active{% endif %}"
+                    href="{{ url_for('rpc_console') }}">
                     <i class="bi bi-terminal"></i>
                     <span>RPC Console</span>
                 </a>
             </li>
         </ul>
-        
+
         <div class="sidebar-footer">
             <a class="nav-link" href="{{ url_for('logout') }}">
                 <i class="bi bi-box-arrow-left"></i>
@@ -77,7 +93,7 @@
             </a>
         </div>
     </nav>
-    
+
     <!-- Main Content -->
     <main class="main-content">
         <!-- Top Bar -->
@@ -110,21 +126,21 @@
                 </div>
             </div>
         </header>
-        
+
         <!-- Flash Messages -->
         {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-messages">
-                    {% for category, message in messages %}
-                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                            {{ message }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
         {% endwith %}
-        
+
         <!-- Page Content -->
         <div class="page-content">
             {% block content %}{% endblock %}
@@ -134,10 +150,11 @@
     <!-- Non-authenticated content -->
     {% block public_content %}{% endblock %}
     {% endif %}
-    
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
     {% block extra_js %}{% endblock %}
 </body>
+
 </html>

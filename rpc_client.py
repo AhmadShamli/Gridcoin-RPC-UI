@@ -113,9 +113,20 @@ class GridcoinRPCClient:
         """List recent transactions."""
         return self._call('listtransactions', ['*', count])
     
-    def list_unspent(self, min_conf: int = 1, max_conf: int = 9999999) -> dict:
+    def list_unspent(self, min_conf: int = 1, max_conf: int = 9999999, addresses: list = None) -> dict:
         """List unspent transaction outputs."""
-        return self._call('listunspent', [min_conf, max_conf])
+        params = [min_conf, max_conf]
+        if addresses:
+            params.append(addresses)
+        return self._call('listunspent', params)
+    
+    def list_address_groupings(self) -> dict:
+        """Lists groups of addresses which have had their common ownership made public."""
+        return self._call('listaddressgroupings')
+
+    def get_received_by_address(self, address: str, min_conf: int = 1) -> dict:
+        """Returns the total amount received by the given address."""
+        return self._call('getreceivedbyaddress', [address, min_conf])
     
     # ===== Voting/Polls =====
     
