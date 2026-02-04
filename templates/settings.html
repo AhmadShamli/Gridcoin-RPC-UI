@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}Settings - Gridcoin RPC Dashboard{% endblock %}
+{% block page_title %}Settings{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="bi bi-hdd-network me-2"></i>RPC Connection Settings
+            </div>
+            <div class="card-body">
+                <form id="rpcSettingsForm">
+                    <div class="mb-3">
+                        <label for="rpcHost" class="form-label">RPC Host</label>
+                        <input type="text" class="form-control" id="rpcHost" value="{{ config.GRIDCOIN_RPC_HOST }}" required>
+                        <div class="form-text">The hostname or IP address of the Gridcoin daemon (e.g., localhost, 127.0.0.1, or remote IP).</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="rpcPort" class="form-label">RPC Port</label>
+                        <input type="number" class="form-control" id="rpcPort" value="{{ config.GRIDCOIN_RPC_PORT }}" required>
+                        <div class="form-text">The port number gridcoinresearchd is listening on (default: 15715 for mainnet).</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="rpcUser" class="form-label">RPC Username</label>
+                        <input type="text" class="form-control" id="rpcUser" value="{{ config.GRIDCOIN_RPC_USER }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="rpcPassword" class="form-label">RPC Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="rpcPassword" value="{{ config.GRIDCOIN_RPC_PASSWORD }}" required>
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary" id="saveRpcSettings">
+                            <i class="bi bi-save me-2"></i>Save & Test Connection
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('rpcSettingsForm');
+        const passwordInput = document.getElementById('rpcPassword');
+        const togglePasswordBtn = document.getElementById('togglePassword');
+        
+        // Toggle password visibility
+        togglePasswordBtn.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            togglePasswordBtn.querySelector('i').classList.toggle('bi-eye');
+            togglePasswordBtn.querySelector('i').classList.toggle('bi-eye-slash');
+        });
+        
+        // Handle form submission
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('saveRpcSettings');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Testing Connection...';
+            
+            const data = {
+                host: document.getElementById('rpcHost').value,
+                port: document.getElementById('rpcPort').value,
+                user: document.getElementById('rpcUser').value,
+                password: document.getElementById('rpcPassword').value
+            };
+            
+            try {
+                const response = await fetch('/api/settings/rpc', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showToast(result.message, 'success');
+                    // Reload page after short delay to show success state
+                    setTimeout(() => location.reload(), 1500);
+                } else {
+                    showToast(result.error, 'danger');
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                }
+            } catch (error) {
+                showToast('An error occurred while saving settings.', 'danger');
+                console.error('Error:', error);
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        });
+        
+        // Helper to show toast messages (reusing existing toast logic if available, or creating simple alert)
+        // Assuming app.js might have a toast function, or we use a simple fallback
+        function showToast(message, type) {
+            // Check if there's a global showToast or flash message container
+            const flashContainer = document.querySelector('.flash-messages');
+            if (flashContainer) {
+                const alert = document.createElement('div');
+                alert.className = `alert alert-${type} alert-dismissible fade show`;
+                alert.innerHTML = `
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+                flashContainer.appendChild(alert);
+            } else {
+                alert(message);
+            }
+        }
+    });
+</script>
+{% endblock %}

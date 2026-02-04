@@ -4,6 +4,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from config import Config
 from rpc_client import rpc_client
 import json
+from dotenv import set_key, find_dotenv
+import os
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -109,6 +111,13 @@ def rpc_console():
 def addresses():
     """Address list view."""
     return render_template('addresses.html')
+
+
+@app.route('/settings')
+@login_required
+def settings():
+    """Settings view."""
+    return render_template('settings.html', config=Config)
 
 
 # ===== API Routes =====
@@ -250,6 +259,41 @@ def api_execute_rpc():
     
     result = rpc_client.execute_rpc(method, params)
     return jsonify(result)
+
+
+@app.route('/api/settings/rpc', methods=['POST'])
+@login_required
+def api_update_rpc_settings():
+    """Update RPC connection settings."""
+    data = request.get_json()
+    host = data.get('host')
+    port = data.get('port')
+    user = data.get('user')
+    password = data.get('password')
+    
+    if not all([host, port, user, password]):
+        return jsonify({'success': False, 'error': 'All fields are required'}), 400
+        
+    try:
+        # Update runtime client
+        rpc_client.update_connection(host, port, user, password)
+        
+        # Test connection
+        info = rpc_client.get_info()
+        if not info.get('success', False):
+             return jsonify({'success': False, 'error': 'Connection failed: ' + info.get('error', 'Unknown error')})
+
+        # Save to .env file
+        dotenv_file = find_dotenv()
+        if dotenv_file:
+            set_key(dotenv_file, "GRIDCOIN_RPC_HOST", host)
+            set_key(dotenv_file, "GRIDCOIN_RPC_PORT", str(port))
+            set_key(dotenv_file, "GRIDCOIN_RPC_USER", user)
+            set_key(dotenv_file, "GRIDCOIN_RPC_PASSWORD", password)
+        
+        return jsonify({'success': True, 'message': 'Settings saved and connection verified!'})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 
 # ===== Error Handlers =====

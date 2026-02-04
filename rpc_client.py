@@ -11,6 +11,22 @@ class GridcoinRPCClient:
         self.auth = (Config.GRIDCOIN_RPC_USER, Config.GRIDCOIN_RPC_PASSWORD)
         self.headers = {'Content-Type': 'application/json'}
         self._id_counter = 0
+
+    def update_connection(self, host=None, port=None, user=None, password=None):
+        """Update connection details dynamically."""
+        # Update Config class temporarily (or permanently if reloaded, but this affects current instance)
+        if host is not None:
+            Config.GRIDCOIN_RPC_HOST = host
+        if port is not None:
+            Config.GRIDCOIN_RPC_PORT = int(port)
+        if user is not None:
+            Config.GRIDCOIN_RPC_USER = user
+        if password is not None:
+            Config.GRIDCOIN_RPC_PASSWORD = password
+            
+        # Re-initialize connection vars
+        self.url = Config.get_rpc_url()
+        self.auth = (Config.GRIDCOIN_RPC_USER, Config.GRIDCOIN_RPC_PASSWORD)
     
     def _call(self, method: str, params: list = None) -> dict:
         """Make an RPC call to Gridcoin daemon."""
