@@ -26,6 +26,5 @@ services:
       - mynetwork
 
 networks:
-  clara:
-    name: mynetwork
+  mynetwork:
     external: true
