@@ -22,5 +22,10 @@ services:
       - SECRET_KEY=${SECRET_KEY:-change-this-secret-key}
       - APP_USERNAME=${APP_USERNAME:-admin}
       - APP_PASSWORD=${APP_PASSWORD:-changeme}
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    networks:
+      - mynetwork
+
+networks:
+  clara:
+    name: mynetwork
+    external: true
