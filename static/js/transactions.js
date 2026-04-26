@@ -42,6 +42,9 @@ function updateTransactionsTable(data) {
 
     const transactions = data.data || [];
 
+    // Sort by time descending (latest first)
+    transactions.sort((a, b) => (b.time || 0) - (a.time || 0));
+
     if (transactions.length === 0) {
         tbody.innerHTML = `
             <tr>
